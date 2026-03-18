@@ -1,4 +1,4 @@
-name: Build APK
+name: Build Flutter APK
 
 on:
   workflow_dispatch:
@@ -18,5 +18,5 @@ jobs:
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v4
         with:
-          name: release-apk
+          name: apk
           path: build/app/outputs/flutter-apk/app-release.apk
