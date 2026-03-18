@@ -47,13 +47,20 @@ https://github.com/Lemon-shark-cjp/babyAPP/actions/workflows/build_apk.yml
 **立即构建 APK：**
 
 👉 **点击这个链接直接开始：**
-https://github.com/Lemon-shark-cjp/babyAPP/actions/workflows/build_apk.yml
+https://github.com/Lemon-shark-cjp/babyAPP/actions
 
 然后：
-1. 点击右侧 "Run workflow"
-2. 再点击绿色的 "Run workflow"
-3. 等待 5-10 分钟
-4. 下载 APK（在页面底部的 Artifacts）
+1. 点击 "Build APK" 或 "Build Flutter APK"
+2. 点击右侧 "Run workflow"（如果没有看到，刷新页面）
+3. 选择分支 "master"
+4. 点击绿色的 "Run workflow"
+5. 等待 5-10 分钟
+6. 下载 APK（在页面底部的 Artifacts）
+
+**注意：** 如果看不到 "Run workflow" 按钮，可能是因为：
+- 页面需要刷新
+- 需要等待 workflow 文件同步（约1-2分钟）
+- 尝试直接访问：https://github.com/Lemon-shark-cjp/babyAPP/actions/workflows/build.yml
 
 ---
 
