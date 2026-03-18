@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宝宝成长记 - UI预览</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .phone {
+            width: 375px;
+            height: 812px;
+            background: #f5f5f5;
+            border-radius: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .screen {
+            height: 100%;
+            overflow-y: auto;
+            padding-bottom: 90px;
+        }
+        
+        /* 首页样式 */
+        .header-card {
+            margin: 16px;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff8a80, #ffab91);
+            border-radius: 20px;
+            color: white;
+        }
+        
+        .baby-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .baby-avatar {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+        
+        .baby-name {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        
+        .baby-age {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+        
+        .vaccine-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .section {
+            margin: 12px 16px;
+            padding: 16px;
+            background: white;
+            border-radius: 16px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .quick-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        
+        .quick-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .quick-btn-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .quick-btn-label {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 8px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .stat-value {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 2px;
+        }
+        
+        .timeline-item {
+            display: flex;
+            gap: 12px;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+        
+        .timeline-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .timeline-content {
+            flex: 1;
+        }
+        
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .timeline-title {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        
+        .timeline-time {
+            font-size: 13px;
+            color: #999;
+        }
+        
+        .timeline-detail {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+        }
+        
+        .timeline-photo-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 8px;
+            padding: 4px 8px;
+            background: #fff3e0;
+            border-radius: 8px;
+            font-size: 12px;
+            color: #ff8a80;
+        }
+        
+        /* 底部导航 */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 8px 0 20px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        
+        .nav-item.active {
+            background: rgba(255,138,128,0.1);
+        }
+        
+        .nav-icon {
+            font-size: 22px;
+        }
+        
+        .nav-item.active .nav-icon {
+            color: #ff8a80;
+        }
+        
+        .nav-label {
+            font-size: 11px;
+            color: #999;
+        }
+        
+        .nav-item.active .nav-label {
+            color: #ff8a80;
+            font-weight: 600;
+        }
+        
+        /* 档案页样式 */
+        .profile-header {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #ffccbc, #ffab91);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+        
+        .profile-info h2 {
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .profile-info .gender {
+            color: #ff8a80;
+        }
+        
+        .profile-info .birth {
+            font-size: 14px;
+            color: #666;
+            margin-top: 4px;
+        }
+        
+        .age-tag {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 6px 14px;
+            background: #fff3e0;
+            color: #ff8a80;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .btn-outline {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ff8a80;
+            color: #ff8a80;
+            background: white;
+            border-radius: 12px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .chart-container {
+            height: 200px;
+            background: linear-gradient(to bottom, transparent 0%, rgba(255,138,128,0.05) 100%);
+            border-radius: 12px;
+            position: relative;
+            margin: 16px 0;
+        }
+        
+        .chart-line {
+            position: absolute;
+            bottom: 40px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: #ff8a80;
+        }
+        
+        .chart-dots {
+            position: absolute;
+            bottom: 36px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .chart-dot {
+            width: 10px;
+            height: 10px;
+            background: #ff8a80;
+            border-radius: 50%;
+        }
+        
+        .chart-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .chart-tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            background: #f5f5f5;
+            color: #666;
+        }
+        
+        .chart-tab.active {
+            background: #ff8a80;
+            color: white;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: #ff8a80;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .vaccine-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .vaccine-card {
+            padding: 16px;
+            border-radius: 16px;
+        }
+        
+        .vaccine-card.completed {
+            background: #e8f5e9;
+        }
+        
+        .vaccine-card.pending {
+            background: #fff3e0;
+        }
+        
+        .vaccine-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .vaccine-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .vaccine-count {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .vaccine-card.completed .vaccine-title,
+        .vaccine-card.completed .vaccine-count {
+            color: #66bb6a;
+        }
+        
+        .vaccine-card.pending .vaccine-title,
+        .vaccine-card.pending .vaccine-count {
+            color: #ff8a80;
+        }
+        
+        .vaccine-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            margin-bottom: 6px;
+            opacity: 0.8;
+        }
+        
+        .milestone-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 0;
+        }
+        
+        .milestone-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .milestone-icon.achieved {
+            background: #ffe0b2;
+            color: #ff8a80;
+        }
+        
+        .milestone-icon.pending {
+            background: #f5f5f5;
+            color: #ccc;
+        }
+        
+        .milestone-title {
+            flex: 1;
+            font-size: 15px;
+        }
+        
+        .milestone-title.achieved {
+            font-weight: 600;
+        }
+        
+        .milestone-title.pending {
+            color: #999;
+        }
+        
+        .milestone-date {
+            font-size: 13px;
+            color: #999;
+        }
+        
+        .check-icon {
+            color: #66bb6a;
+            font-size: 20px;
+        }
+        
+        /* 记录页样式 */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: white;
+            margin: 0 16px;
+            border-radius: 16px;
+        }
+        
+        .calendar-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff8a80;
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .calendar-nav button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #ff8a80;
+            cursor: pointer;
+        }
+        
+        .week-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            padding: 12px 0;
+            font-size: 13px;
+            color: #999;
+        }
+        
+        .week-row {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            padding: 8px 0;
+        }
+        
+        .day-cell {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            border-radius: 50%;
+            font-size: 14px;
+        }
+        
+        .day-cell.today {
+            background: rgba(255,138,128,0.3);
+            color: #ff8a80;
+        }
+        
+        .day-cell.selected {
+            background: #ff8a80;
+            color: white;
+        }
+        
+        .photo-gallery {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 4px 0;
+        }
+        
+        .photo-thumb {
+            width: 72px;
+            height: 72px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .photo-add {
+            width: 72px;
+            height: 72px;
+            border: 2px dashed #ddd;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .timeline-record {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .timeline-time-col {
+            width: 50px;
+            font-size: 13px;
+            color: #999;
+            padding-top: 12px;
+        }
+        
+        /* 健康页样式 */
+        .health-alert {
+            margin: 16px;
+            padding: 20px;
+            background: linear-gradient(135deg, #80cbc4, #4db6ac);
+            border-radius: 20px;
+            color: white;
+            display: flex;
+            gap: 16px;
+        }
+        
+        .health-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .health-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .health-subtitle {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        
+        .tool-item {
+            aspect-ratio: 1;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .tool-icon {
+            font-size: 36px;
+        }
+        
+        .tool-label {
+            font-size: 13px;
+            color: #444;
+        }
+        
+        .symptoms-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 4px 0;
+        }
+        
+        .symptom-card {
+            width: 100px;
+            height: 100px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        
+        .symptom-icon {
+            font-size: 32px;
+        }
+        
+        .symptom-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* 设置页样式 */
+        .user-card {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .user-avatar {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #ff8a80, #ffab91);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+        }
+        
+        .user-info h3 {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        
+        .user-stats {
+            font-size: 14px;
+            color: #999;
+        }
+        
+        .baby-list-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: #fff3e0;
+            border-radius: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .baby-list-item .baby-avatar {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,138,128,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff8a80;
+            font-size: 24px;
+        }
+        
+        .baby-list-item .baby-info {
+            flex: 1;
+        }
+        
+        .baby-list-item .baby-name {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .baby-list-item .baby-age {
+            font-size: 13px;
+            color: #666;
+            margin-top: 2px;
+        }
+        
+        .current-tag {
+            padding: 4px 10px;
+            background: #ff8a80;
+            color: white;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .family-members {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .family-member {
+            text-align: center;
+        }
+        
+        .family-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 8px;
+        }
+        
+        .family-name {
+            font-size: 13px;
+        }
+        
+        .family-add {
+            width: 56px;
+            height: 56px;
+            border: 2px dashed #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .setting-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 0;
+        }
+        
+        .setting-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+        
+        .setting-content {
+            flex: 1;
+        }
+        
+        .setting-title {
+            font-size: 15px;
+        }
+        
+        .setting-subtitle {
+            font-size: 12px;
+            color: #999;
+            margin-top: 2px;
+        }
+        
+        .setting-arrow {
+            color: #ccc;
+            font-size: 20px;
+        }
+        
+        .switch {
+            width: 50px;
+            height: 28px;
+            background: #ddd;
+            border-radius: 14px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .switch.active {
+            background: #ff8a80;
+        }
+        
+        .switch::after {
+            content: '';
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.2s;
+        }
+        
+        .switch.active::after {
+            transform: translateX(22px);
+        }
+        
+        .divider {
+            height: 1px;
+            background: #f0f0f0;
+            margin-left: 60px;
+        }
+        
+        /* 页面切换 */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone">
+        <div class="screen">
+            <!-- 首页 -->
+            <div id="page-home" class="page active">
+                <div class="header-card">
+                    <div class="baby-info">
+                        <div class="baby-avatar">👶</div>
+                        <div>
+                            <div class="baby-name">小宝 ♀</div>
+                            <div class="baby-age">2025年9月4日出生</div>
+                            <div class="vaccine-tag">
+                                💉 乙肝疫苗第3剂 还有3天
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">⚡ 快捷记录</div>
+                    <div class="quick-buttons">
+                        <div class="quick-btn">
+                            <div class="quick-btn-icon" style="background: #ffccbc;">🍼</div>
+                            <div class="quick-btn-label">喂奶</div>
+                        </div>
+                        <div class="quick-btn">
+                            <div class="quick-btn-icon" style="background: #b2dfdb;">😴</div>
+                            <div class="quick-btn-label">睡觉</div>
+                        </div>
+                        <div class="quick-btn">
+                            <div class="quick-btn-icon" style="background: #fff9c4;">🥄</div>
+                            <div class="quick-btn-label">辅食</div>
+                        </div>
+                        <div class="quick-btn">
+                            <div class="quick-btn-icon" style="background: #d7ccc8;">💩</div>
+                            <div class="quick-btn-label">排便</div>
+                        </div>
+                        <div class="quick-btn">
+                            <div class="quick-btn-icon" style="background: #ffcdd2;">🌡️</div>
+                            <div class="quick-btn-label">体温</div>
+                        </div>
+                        <div class="quick-btn">
+                            <div class="quick-btn-icon" style="background: #e1bee7;">📷</div>
+                            <div class="quick-btn-label">拍照</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">📊 今日概览</div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-icon" style="background: #ffccbc;">🍼</div>
+                            <div class="stat-label">喂奶</div>
+                            <div class="stat-value">3次</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon" style="background: #b2dfdb;">😴</div>
+                            <div class="stat-label">睡眠</div>
+                            <div class="stat-value">4h</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon" style="background: #fff9c4;">🥄</div>
+                            <div class="stat-label">辅食</div>
+                            <div class="stat-value">1次</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon" style="background: #d7ccc8;">💩</div>
+                            <div class="stat-label">排便</div>
+                            <div class="stat-value">2次</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <div class="section-title" style="margin: 0;">📅 最近记录</div>
+                        <a href="#" style="color: #ff8a80; font-size: 14px; text-decoration: none;">查看全部</a>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-icon" style="background: #ffccbc;">🍼</div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <div class="timeline-title">奶粉</div>
+                                <div class="timeline-time">15:30</div>
+                            </div>
+                            <div class="timeline-detail">120ml</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-icon" style="background: #d7ccc8;">💩</div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <div class="timeline-title">排便</div>
+                                <div class="timeline-time">14:00</div>
+                            </div>
+                            <div class="timeline-detail">正常 · 黄色</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-icon" style="background: #fff9c4;">🥄</div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <div class="timeline-title">辅食</div>
+                                <div class="timeline-time">12:00</div>
+                            </div>
+                            <div class="timeline-detail">米粉+南瓜泥 · 吃了大半碗</div>
+                            <div class="timeline-photo-tag">
+                                📷 2张 🎥 视频
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-icon" style="background: #b2dfdb;">😴</div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <div class="timeline-title">小睡</div>
+                                <div class="timeline-time">09:30-11:00</div>
+                            </div>
+                            <div class="timeline-detail">1.5小时</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-icon" style="background: #ffccbc;">🍼</div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <div class="timeline-title">母乳亲喂</div>
+                                <div class="timeline-time">08:00</div>
+                            </div>
+                            <div class="timeline-detail">15分钟 · 左边</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 记录页 -->
+            <div id="page-record" class="page">
+                <div class="calendar-header">
+                    <button>‹</button>
+                    <div class="calendar-title">2026年3月</div>
+                    <button>›</button>
+                </div>
+                
+                <div class="section" style="margin-top: 12px;">
+                    <div class="week-days">
+                        <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
+                    </div>
+                    <div class="week-row">
+                        <div class="day-cell">9</div>
+                        <div class="day-cell">10</div>
+                        <div class="day-cell">11</div>
+                        <div class="day-cell">12</div>
+                        <div class="day-cell">13</div>
+                        <div class="day-cell">14</div>
+                        <div class="day-cell">15</div>
+                    </div>
+                    <div class="week-row">
+                        <div class="day-cell selected">16</div>
+                        <div class="day-cell">17</div>
+                        <div class="day-cell">18</div>
+                        <div class="day-cell">19</div>
+                        <div class="day-cell">20</div>
+                        <div class="day-cell">21</div>
+                        <div class="day-cell">22</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <div class="section-title" style="margin: 0;">📸 今日相册</div>
+                        <div style="padding: 4px 10px; background: #fff3e0; border-radius: 12px; font-size: 12px; color: #ff8a80; font-weight: 600;">5张</div>
+                    </div>
+                    <div class="photo-gallery">
+                        <div class="photo-thumb" style="background: #ffe0b2;">早</div>
+                        <div class="photo-thumb" style="background: #ffccbc;">中</div>
+                        <div class="photo-thumb" style="background: #fff9c4;">辅</div>
+                        <div class="photo-thumb" style="background: #b2dfdb;">睡</div>
+                        <div class="photo-thumb" style="background: #e1bee7;">晚</div>
+                        <div class="photo-add">+</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <div class="section-title" style="margin: 0;">⏰ 今日时间轴</div>
+                        <div style="padding: 6px 12px; background: rgba(255,138,128,0.1); border-radius: 16px; font-size: 12px; color: #ff8a80; font-weight: 600;">
+                            + 记一笔
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-record">
+                        <div class="timeline-time-col">15:30</div>
+                        <div class="timeline-icon" style="background: #ffccbc;">🍼</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">奶粉</div>
+                            <div class="timeline-detail">120ml</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-record" style="margin-top: 12px;">
+                        <div class="timeline-time-col">14:00</div>
+                        <div class="timeline-icon" style="background: #d7ccc8;">💩</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">排便</div>
+                            <div class="timeline-detail">正常 · 黄色</div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-record" style="margin-top: 12px;">
+                        <div class="timeline-time-col">12:00</div>
+                        <div class="timeline-icon" style="background: #fff9c4;">🥄</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">辅食</div>
+                            <div class="timeline-detail">米粉+南瓜泥 · 吃了大半碗</div>
+                            <div style="margin-top: 8px;">
+                                <span class="timeline-photo-tag">📷 2张</span>
+                                <span class="timeline-photo-tag" style="background: #e8f5e9; color: #66bb6a; margin-left: 8px;">🎥 视频</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-record" style="margin-top: 12px;">
+                        <div class="timeline-time-col">09:30</div>
+                        <div class="timeline-icon" style="background: #b2dfdb;">😴</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">小睡</div>
+                            <div class="timeline-detail">09:30-11:00 · 1.5小时</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 档案页 -->
+            <div id="page-profile" class="page">
+                <div class="section">
+                    <div class="profile-header">
+                        <div class="profile-avatar">👶</div>
+                        <div class="profile-info">
+                            <h2>小宝 <span class="gender">♀</span></h2>
+                            <div class="birth">2025年9月4日出生 · 处女座</div>
+                            <div class="age-tag">6个月12天</div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-outline">✏️ 编辑资料</button>
+                        <button class="btn-outline" style="border-color: #80cbc4; color: #80cbc4;">📷 更换头像</button>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <div class="section-title" style="margin: 0;">📈 生长曲线</div>
+                        <div style="padding: 6px 12px; background: #e8f5e9; border-radius: 16px; font-size: 12px; color: #66bb6a; font-weight: 600;">
+                            ✓ 发育良好
+                        </div>
+                    </div>
+                    <div style="font-size: 13px; color: #666;">最新：体重 9.2kg（P75） 身高 68cm（P50）</div>
+                    
+                    <div class="chart-container">
+                        <div class="chart-line"></div>
+                        <div class="chart-dots">
+                            <div class="chart-dot"></div>
+                            <div class="chart-dot"></div>
+                            <div class="chart-dot"></div>
+                            <div class="chart-dot"></div>
+                            <div class="chart-dot"></div>
+                            <div class="chart-dot"></div>
+                            <div class="chart-dot"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-tabs">
+                        <div class="chart-tab active">体重</div>
+                        <div class="chart-tab">身高</div>
+                        <div class="chart-tab">头围</div>
+                        <div class="chart-tab">BMI</div>
+                    </div>
+                    
+                    <button class="btn-primary">+ 记录今日数据</button>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">💉 疫苗接种</div>
+                    <div class="vaccine-grid">
+                        <div class="vaccine-card completed">
+                            <div class="vaccine-header">
+                                <div class="vaccine-title">已接种</div>
+                                <div class="vaccine-count">6剂</div>
+                            </div>
+                            <div class="vaccine-item">✓ 乙肝①②③</div>
+                            <div class="vaccine-item">✓ 卡介苗</div>
+                            <div class="vaccine-item">✓ 脊灰①②</div>
+                        </div>
+                        <div class="vaccine-card pending">
+                            <div class="vaccine-header">
+                                <div class="vaccine-title">待接种</div>
+                                <div class="vaccine-count">2剂</div>
+                            </div>
+                            <div class="vaccine-item">⏰ 乙肝③ 3天后</div>
+                            <div class="vaccine-item">⏰ 流脑A 1月后</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <div class="section-title" style="margin: 0;">🏆 成长里程碑</div>
+                        <a href="#" style="color: #ff8a80; font-size: 14px; text-decoration: none;">+ 记录</a>
+                    </div>
+                    
+                    <div class="milestone-item">
+                        <div class="milestone-icon achieved">🏆</div>
+                        <div class="milestone-title achieved">会翻身</div>
+                        <div class="milestone-date">2026-03-01</div>
+                        <div class="check-icon">✓</div>
+                    </div>
+                    
+                    <div class="milestone-item">
+                        <div class="milestone-icon achieved">🏆</div>
+                        <div class="milestone-title achieved">长第一颗牙</div>
+                        <div class="milestone-date">2026-02-15</div>
+                        <div class="check-icon">✓</div>
+                    </div>
+                    
+                    <div class="milestone-item">
+                        <div class="milestone-icon achieved">🏆</div>
+                        <div class="milestone-title achieved">会坐</div>
+                        <div class="milestone-date">2026-01-20</div>
+                        <div class="check-icon">✓</div>
+                    </div>
+                    
+                    <div class="milestone-item">
+                        <div class="milestone-icon pending">🔒</div>
+                        <div class="milestone-title pending">会爬</div>
+                        <div class="milestone-date">预计4月达成</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 健康页 -->
+            <div id="page-health" class="page">
+                <div style="padding: 20px;">
+                    <h1 style="font-size: 28px; font-weight: bold;">💚 健康中心</h1>
+                </div>
+                
+                <div class="health-alert">
+                    <div class="health-icon">🏥</div>
+                    <div>
+                        <div class="health-title">宝宝健康状况良好</div>
+                        <div class="health-subtitle">最近7天无发热、腹泻等异常</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">🛠️ 健康工具</div>
+                    <div class="tools-grid">
+                        <div class="tool-item" style="background: #ffcdd2;">
+                            <div class="tool-icon">🌡️</div>
+                            <div class="tool-label">体温记录</div>
+                        </div>
+                        <div class="tool-item" style="background: #e1bee7;">
+                            <div class="tool-icon">💊</div>
+                            <div class="tool-label">用药记录</div>
+                        </div>
+                        <div class="tool-item" style="background: #fff9c4;">
+                            <div class="tool-icon">🤒</div>
+                            <div class="tool-label">症状自查</div>
+                        </div>
+                        <div class="tool-item" style="background: #b2dfdb;">
+                            <div class="tool-icon">🏥</div>
+                            <div class="tool-label">医院导航</div>
+                        </div>
+                        <div class="tool-item" style="background: #d7ccc8;">
+                            <div class="tool-icon">📋</div>
+                            <div class="tool-label">健康档案</div>
+                        </div>
+                        <div class="tool-item" style="background: #ffccbc;">
+                            <div class="tool-icon">🚑</div>
+                            <div class="tool-label">急救指南</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <div class="section-title" style="margin: 0;">📋 健康档案</div>
+                        <a href="#" style="color: #ff8a80; font-size: 14px; text-decoration: none;">编辑</a>
+                    </div>
+                    <div style="display: flex; margin-bottom: 14px;">
+                        <div style="width: 80px; color: #666; font-size: 14px;">过敏史</div>
+                        <div style="flex: 1; font-size: 14px; font-weight: 500;">无已知过敏</div>
+                    </div>
+                    <div style="display: flex; margin-bottom: 14px;">
+                        <div style="width: 80px; color: #666; font-size: 14px;">既往病史</div>
+                        <div style="flex: 1; font-size: 14px; font-weight: 500;">新生儿黄疸（已痊愈）</div>
+                    </div>
+                    <div style="display: flex; margin-bottom: 14px;">
+                        <div style="width: 80px; color: #666; font-size: 14px;">定期体检</div>
+                        <div style="flex: 1; font-size: 14px; font-weight: 500;">2026-03-20 市妇幼</div>
+                    </div>
+                    <div style="display: flex;">
+                        <div style="width: 80px; color: #666; font-size: 14px;">血型</div>
+                        <div style="flex: 1; font-size: 14px; font-weight: 500;">A型</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">📚 常见症状护理</div>
+                    <div class="symptoms-scroll">
+                        <div class="symptom-card" style="background: #ffcdd2;">
+                            <div class="symptom-icon">🔥</div>
+                            <div class="symptom-name">发热</div>
+                        </div>
+                        <div class="symptom-card" style="background: #d7ccc8;">
+                            <div class="symptom-icon">💩</div>
+                            <div class="symptom-name">腹泻</div>
+                        </div>
+                        <div class="symptom-card" style="background: #ffe0b2;">
+                            <div class="symptom-icon">🔴</div>
+                            <div class="symptom-name">湿疹</div>
+                        </div>
+                        <div class="symptom-card" style="background: #b2dfdb;">
+                            <div class="symptom-icon">😷</div>
+                            <div class="symptom-name">咳嗽</div>
+                        </div>
+                        <div class="symptom-card" style="background: #fff9c4;">
+                            <div class="symptom-icon">🚫</div>
+                            <div class="symptom-name">便秘</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 设置页 -->
+            <div id="page-settings" class="page">
+                <div style="padding: 20px;">
+                    <h1 style="font-size: 28px; font-weight: bold;">👤 我的</h1>
+                </div>
+                
+                <div class="section">
+                    <div class="user-card">
+                        <div class="user-avatar">👩</div>
+                        <div class="user-info">
+                            <h3>小九妈妈</h3>
+                            <div class="user-stats">已记录128天 · 照片356张</div>
+                        </div>
+                        <div style="color: #999; font-size: 20px;">✏️</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">👶 我的宝宝</div>
+                    <div class="baby-list-item">
+                        <div class="baby-avatar">♀</div>
+                        <div class="baby-info">
+                            <div class="baby-name">小宝</div>
+                            <div class="baby-age">6个月12天 · 女</div>
+                        </div>
+                        <div class="current-tag">当前</div>
+                    </div>
+                    <button class="btn-outline" style="width: 100%;">+ 添加宝宝</button>
+                </div>
+                
+                <div class="section">
+                    <div class="section-title">👨‍👩‍👧 家人共享</div>
+                    <div class="family-members">
+                        <div class="family-member">
+                            <div class="family-avatar" style="background: #90caf9;">👨</div>
+                            <div class="family-name">爸爸</div>
+                        </div>
+                        <div class="family-member">
+                            <div class="family-avatar" style="background: #ffccbc;">👵</div>
+                            <div class="family-name">奶奶</div>
+                        </div>
+                        <div class="family-member">
+                            <div class="family-add">+</div>
+                            <div class="family-name" style="color: #999;">邀请</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section" style="padding: 0 20px;">
+                    <div class="setting-item">
+                        <div class="setting-icon" style="background: rgba(144,202,249,0.2); color: #90caf9;">☁️</div>
+                        <div class="setting-content">
+                            <div class="setting-title">云同步与备份</div>
+                            <div class="setting-subtitle">上次同步：刚刚</div>
+                        </div>
+                        <div class="setting-arrow">›</div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="setting-item">
+                        <div class="setting-icon" style="background: rgba(128,203,188,0.2); color: #80cbc4;">📥</div>
+                        <div class="setting-content">
+                            <div class="setting-title">导出数据</div>
+                            <div class="setting-subtitle">Excel / PDF</div>
+                        </div>
+                        <div class="setting-arrow">›</div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="setting-item">
+                        <div class="setting-icon" style="background: rgba(255,204,188,0.2); color: #ffccbc;">🔔</div>
+                        <div class="setting-content">
+                            <div class="setting-title">提醒设置</div>
+                        </div>
+                        <div class="setting-arrow">›</div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="setting-item">
+                        <div class="setting-icon" style="background: rgba(179,157,219,0.2); color: #b39ddb;">🌙</div>
+                        <div class="setting-content">
+                            <div class="setting-title">夜间模式</div>
+                        </div>
+                        <div class="switch"></div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="setting-item">
+                        <div class="setting-icon" style="background: rgba(188,170,164,0.2); color: #bcaaa4;">✈️</div>
+                        <div class="setting-content">
+                            <div class="setting-title">离线模式</div>
+                        </div>
+                        <div class="switch"></div>
+                    </div>
+                </div>
+                
+                <div class="section" style="padding: 0 20px; margin-top: 12px;">
+                    <div class="setting-item">
+                        <div class="setting-icon" style="background: rgba(128,203,188,0.2); color: #80cbc4;">❓</div>
+                        <div class="setting-content">
+                            <div class="setting-title">帮助与反馈</div>
+                        </div>
+                        <div class="setting-arrow">›</div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="setting-item">
+                        <div class="setting-icon" style="background: rgba(144,202,249,0.2); color: #90caf9;">ℹ️</div>
+                        <div class="setting-content">
+                            <div class="setting-title">关于我们</div>
+                        </div>
+                        <div class="setting-arrow">›</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航 -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="showPage('home')">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">首页</div>
+            </div>
+            <div class="nav-item" onclick="showPage('record')">
+                <div class="nav-icon">📝</div>
+                <div class="nav-label">记录</div>
+            </div>
+            <div class="nav-item" onclick="showPage('profile')">
+                <div class="nav-icon">📁</div>
+                <div class="nav-label">档案</div>
+            </div>
+            <div class="nav-item" onclick="showPage('health')">
+                <div class="nav-icon">💚</div>
+                <div class="nav-label">健康</div>
+            </div>
+            <div class="nav-item" onclick="showPage('settings')">
+                <div class="nav-icon">👤</div>
+                <div class="nav-label">我的</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showPage(page) {
+            // 隐藏所有页面
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            // 显示目标页面
+            document.getElementById('page-' + page).classList.add('active');
+            // 更新导航状态
+            document.querySelectorAll('.nav-item').forEach((item, index) => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
