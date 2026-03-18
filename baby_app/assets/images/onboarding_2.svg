@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#E8F5E9"/>
+  <rect x="100" y="80" width="200" height="140" rx="10" fill="white" stroke="#4CAF50" stroke-width="3"/>
+  <line x1="120" y1="110" x2="280" y2="110" stroke="#E0E0E0" stroke-width="2"/>
+  <line x1="120" y1="140" x2="280" y2="140" stroke="#E0E0E0" stroke-width="2"/>
+  <line x1="120" y1="170" x2="280" y2="170" stroke="#E0E0E0" stroke-width="2"/>
+  <circle cx="140" cy="110" r="8" fill="#4CAF50"/>
+  <circle cx="140" cy="140" r="8" fill="#4CAF50"/>
+  <circle cx="140" cy="170" r="8" fill="#FF9800"/>
+  <path d="M 320 100 L 340 120 L 320 140" fill="none" stroke="#4CAF50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="200" y="260" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#2E7D32">科学管理喂养记录</text>
+</svg>
